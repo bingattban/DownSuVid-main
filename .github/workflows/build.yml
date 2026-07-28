@@ -11,18 +11,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug Info (التحقق من الملفات)
-        run: |
-          echo "=== Current Path ==="
-          pwd
-          echo "=== Directory Contents ==="
-          ls -la
-
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
@@ -30,6 +28,39 @@ jobs:
           sudo apt-get install -y build-essential git unzip wget zip autoconf automake libtool pkg-config zlib1g-dev libncurses-dev libtinfo-dev cmake libffi-dev libssl-dev ccache
           pip3 install --upgrade pip setuptools wheel
           pip3 install buildozer cython virtualenv
+
+      - name: Force Create buildozer.spec
+        run: |
+          rm -f buildozer.spec Buildozer.spec BUILDOZER.spec 2>/dev/null
+          cat << 'SPEC' > buildozer.spec
+          [app]
+          title = DownSuVid
+          package.name = downsuviid
+          package.domain = com.downsuviid
+          source.dir = .
+          source.include_exts = py,png,jpg,kv,atlas,json,ttf
+          source.exclude_dirs = tests,docs,.git,.github,.buildozer,venv,__pycache__
+          version = 1.0.0
+          requirements = python3,kivy,kivymd,yt-dlp,certifi,urllib3,httpx,aiofiles
+          orientation = portrait
+          fullscreen = 0
+          android.presplash_color = #1A237E
+          android.permissions = INTERNET,ACCESS_NETWORK_STATE,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
+          android.api = 33
+          android.minapi = 26
+          android.sdk = 33
+          android.ndk = 25b
+          android.ndk_api = 26
+          android.private_storage = True
+          android.accept_sdk_agreement = True
+          android.entrypoint = org.kivy.android.PythonActivity
+          p4a.branch = develop
+          p4a.bootstrap = sdl2
+          [buildozer]
+          log_level = 2
+          warn_on_root = 1
+          SPEC
+          echo "buildozer.spec successfully generated on server!"
 
       - name: Build APK
         run: yes | buildozer android debug
