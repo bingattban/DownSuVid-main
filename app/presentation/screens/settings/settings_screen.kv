@@ -1,0 +1,49 @@
+<SettingsScreen>:
+    name: 'settings'
+    
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: 0
+        
+        MDTopAppBar:
+            title: 'الإعدادات'
+            left_action_items: [['arrow-left', lambda x: setattr(app.root, 'current', 'downloader')]]
+            elevation: 10
+        
+        MDScrollView:
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: dp(10)
+                padding: dp(15)
+                adaptive_height: True
+                
+                MDCard:
+                    orientation: 'vertical'
+                    padding: dp(15)
+                    spacing: dp(10)
+                    elevation: 5
+                    radius: [15]
+                    size_hint_y: None
+                    height: self.minimum_height
+                    
+                    MDLabel:
+                        text: 'المظهر'
+                        font_style: 'H6'
+                        bold: True
+                    
+                    MDSeparator:
+                        height: dp(1)
+                    
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        spacing: dp(10)
+                        adaptive_height: True
+                        
+                        MDLabel:
+                            text: 'الوضع الليلي'
+                            font_style: 'Body1'
+                        
+                        MDSwitch:
+                            id: dark_mode_switch
+                            active: True
+                            on_active: root.toggle_theme()

@@ -1,0 +1,84 @@
+<AboutScreen>:
+    name: 'about'
+    
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: 0
+        
+        MDTopAppBar:
+            title: 'حول التطبيق'
+            left_action_items: [['arrow-left', lambda x: setattr(app.root, 'current', 'settings')]]
+            elevation: 10
+        
+        MDScrollView:
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: dp(20)
+                padding: dp(20)
+                adaptive_height: True
+                
+                MDCard:
+                    orientation: 'vertical'
+                    padding: dp(20)
+                    spacing: dp(10)
+                    elevation: 5
+                    radius: [20]
+                    size_hint_y: None
+                    height: dp(200)
+                    
+                    MDIcon:
+                        icon: 'download'
+                        size_hint: None, None
+                        size: dp(80), dp(80)
+                        pos_hint: {'center_x': 0.5}
+                        theme_text_color: 'Custom'
+                        text_color: app.theme_cls.primary_color
+                    
+                    MDLabel:
+                        text: 'DownSuVid'
+                        font_style: 'H4'
+                        bold: True
+                        halign: 'center'
+                        theme_text_color: 'Primary'
+                    
+                    MDLabel:
+                        text: 'الإصدار 1.0.0'
+                        font_style: 'Caption'
+                        halign: 'center'
+                        theme_text_color: 'Secondary'
+                
+                MDCard:
+                    orientation: 'vertical'
+                    padding: dp(15)
+                    spacing: dp(10)
+                    elevation: 5
+                    radius: [15]
+                    size_hint_y: None
+                    height: self.minimum_height
+                    
+                    MDLabel:
+                        text: 'المكتبات المستخدمة'
+                        font_style: 'H6'
+                        bold: True
+                        theme_text_color: 'Primary'
+                    
+                    MDSeparator:
+                        height: dp(1)
+                    
+                    MDLabel:
+                        text: 'Kivy & KivyMD\nyt-dlp\nFFmpeg'
+                        font_style: 'Caption'
+                        theme_text_color: 'Secondary'
+                        halign: 'right'
+                
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    spacing: dp(10)
+                    adaptive_height: True
+                    pos_hint: {'center_x': 0.5}
+                    
+                    MDIconButton:
+                        icon: 'github'
+                        on_release: root.open_github()
+                        theme_text_color: 'Custom'
+                        text_color: app.theme_cls.primary_color

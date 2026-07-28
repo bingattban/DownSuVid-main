@@ -1,0 +1,89 @@
+#:import MDTextField kivymd.uix.textfield.MDTextField
+#:import MDRaisedButton kivymd.uix.button.MDRaisedButton
+#:import MDIconButton kivymd.uix.button.MDIconButton
+#:import MDFlatButton kivymd.uix.button.MDFlatButton
+#:import MDCard kivymd.uix.card.MDCard
+#:import MDSeparator kivymd.uix.separator.MDSeparator
+#:import MDProgressBar kivymd.uix.progressbar.MDProgressBar
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDScreen kivymd.uix.screen.MDScreen
+#:import MDBoxLayout kivymd.uix.boxlayout.MDBoxLayout
+#:import MDScrollView kivymd.uix.scrollview.MDScrollView
+#:import AsyncImage kivymd.uix.imagelist.AsyncImage
+
+<DownloaderScreen>:
+    name: 'downloader'
+    
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: 0
+        padding: 0
+        
+        MDTopAppBar:
+            title: 'تحميل الفيديو'
+            left_action_items: [['menu', lambda x: nav_drawer.set_state('open')]]
+            right_action_items: [['history', lambda x: root.show_history()]]
+            elevation: 10
+            md_bg_color: app.theme_cls.primary_color
+        
+        MDScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: dp(15)
+                padding: dp(15)
+                adaptive_height: True
+                
+                MDCard:
+                    orientation: 'vertical'
+                    padding: dp(15)
+                    spacing: dp(10)
+                    elevation: 5
+                    radius: [15]
+                    size_hint_y: None
+                    height: self.minimum_height
+                    
+                    MDLabel:
+                        text: 'رابط الفيديو'
+                        font_style: 'Subtitle1'
+                        bold: True
+                        theme_text_color: 'Primary'
+                    
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        spacing: dp(10)
+                        adaptive_height: True
+                        
+                        MDTextField:
+                            id: url_input
+                            hint_text: 'أدخل رابط الفيديو هنا...'
+                            mode: 'rectangle'
+                            size_hint_x: 0.7
+                            multiline: False
+                            on_text_validate: root.analyze_url()
+                        
+                        MDIconButton:
+                            icon: 'content-paste'
+                            on_release: root.paste_url()
+                            size_hint_x: 0.1
+                        
+                        MDIconButton:
+                            icon: 'close-circle'
+                            on_release: root.clear_url()
+                            size_hint_x: 0.1
+                            theme_text_color: 'Custom'
+                            text_color: 1, 0, 0, 1
+                    
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        spacing: dp(10)
+                        adaptive_height: True
+                        
+                        MDRaisedButton:
+                            id: analyze_btn
+                            text: 'تحليل الرابط'
+                            icon: 'magnify'
+                            size_hint_x: 0.5
+                            on_release: root.analyze_url()
